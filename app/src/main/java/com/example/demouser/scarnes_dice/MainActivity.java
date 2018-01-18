@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         resetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                rollButton.setEnabled(true);
+                holdButton.setEnabled(true);
                 myText.setText("Your score: 0\nComputer Score: 0");
                 userOverallScore = 0;
                 userTurnScore = 0;
@@ -74,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
                 userOverallScore += userTurnScore;
                 myText.setText("Your score: " + userOverallScore + "\nComputer Score: " + computerOverallScore);
                 userTurnScore = 0;
-                computerTurn();
+                if (userOverallScore >= 100) {
+                    holdButton.setEnabled(false);
+                    rollButton.setEnabled(false);
+                    myText.setText(" You win!!! \nMazel tov, my dear player. ");
+                } else {
+                    computerTurn();
+                }
             }
         });
     }
@@ -124,8 +132,12 @@ public class MainActivity extends AppCompatActivity {
         computerOverallScore += computerTurnScore;
         computerTurnScore = 0;
         myText.setText("Your score: " + userOverallScore + "\nComputer Score: " + computerOverallScore);
-        rollButton.setEnabled(true);
-        holdButton.setEnabled(true);
+        if (computerOverallScore >= 100) {
+            myText.setText("The computer wins :( \n Don't give into the robots! \n Try again!");
+        } else {
+            rollButton.setEnabled(true);
+            holdButton.setEnabled(true);
+        }
     }
 
     /*
